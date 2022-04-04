@@ -128,3 +128,7 @@ func LoadMapTileMgr(fn string) (*MapTileMgr, error) {
 
 	return mgr, nil
 }
+
+func (mgr *MapTileMgr) GenMap(w, h int, params *GenMapParams) (*MapData, error) {
+	return genMap(mgr, w, h, params)
+}
