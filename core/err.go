@@ -7,4 +7,8 @@ var (
 	ErrInvalidTileType = errors.New("invalid TileType")
 	// ErrInvalidRandResult - invalid RandResult
 	ErrInvalidRandResult = errors.New("invalid RandResult")
+	// ErrInvalidMapTileID - invalid MapTileID
+	ErrInvalidMapTileID = errors.New("invalid MapTileID")
+	// ErrInvalidGenMapParams - invalid GenMapParams
+	ErrInvalidGenMapParams = errors.New("invalid GenMapParams")
 )

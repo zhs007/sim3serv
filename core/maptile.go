@@ -15,13 +15,32 @@ type MapTile struct {
 	GrowingPeriod int
 }
 
+type MapTileTypeData struct {
+	Data map[int]int
+}
+
+func newMapTileTypeData() *MapTileTypeData {
+	return &MapTileTypeData{
+		Data: make(map[int]int),
+	}
+}
+
+func (mttd *MapTileTypeData) ins(id int) {
+	_, isok := mttd.Data[id]
+	if !isok {
+		mttd.Data[id] = len(mttd.Data)
+	}
+}
+
 type MapTileMgr struct {
-	MapTile map[int]*MapTile
+	MapTile     map[int]*MapTile
+	MapTileType map[int]*MapTileTypeData
 }
 
 func LoadMapTileMgr(fn string) (*MapTileMgr, error) {
 	mgr := &MapTileMgr{
-		MapTile: make(map[int]*MapTile),
+		MapTile:     make(map[int]*MapTile),
+		MapTileType: make(map[int]*MapTileTypeData),
 	}
 
 	err := goutils.LoadCSVFile(fn, func(i int, row []string) bool {
@@ -39,6 +58,7 @@ func LoadMapTileMgr(fn string) (*MapTileMgr, error) {
 						zap.Int("col", j),
 						zap.String("headname", mapHeader[j]),
 						zap.String("v", str),
+						zap.String("fn", fn),
 						zap.Error(err))
 
 					return err
@@ -54,6 +74,7 @@ func LoadMapTileMgr(fn string) (*MapTileMgr, error) {
 						zap.Int("col", j),
 						zap.String("headname", mapHeader[j]),
 						zap.String("v", str),
+						zap.String("fn", fn),
 						zap.Error(err))
 
 					return err
@@ -67,6 +88,7 @@ func LoadMapTileMgr(fn string) (*MapTileMgr, error) {
 						zap.Int("col", j),
 						zap.String("headname", mapHeader[j]),
 						zap.String("v", str),
+						zap.String("fn", fn),
 						zap.Error(err))
 
 					return err
@@ -80,6 +102,7 @@ func LoadMapTileMgr(fn string) (*MapTileMgr, error) {
 						zap.Int("col", j),
 						zap.String("headname", mapHeader[j]),
 						zap.String("v", str),
+						zap.String("fn", fn),
 						zap.Error(err))
 
 					return err
@@ -93,6 +116,7 @@ func LoadMapTileMgr(fn string) (*MapTileMgr, error) {
 						zap.Int("col", j),
 						zap.String("headname", mapHeader[j]),
 						zap.String("v", str),
+						zap.String("fn", fn),
 						zap.Error(err))
 
 					return err
@@ -106,6 +130,7 @@ func LoadMapTileMgr(fn string) (*MapTileMgr, error) {
 						zap.Int("col", j),
 						zap.String("headname", mapHeader[j]),
 						zap.String("v", str),
+						zap.String("fn", fn),
 						zap.Error(err))
 
 					return err
@@ -114,7 +139,15 @@ func LoadMapTileMgr(fn string) (*MapTileMgr, error) {
 			}
 		}
 
-		mgr.MapTile[mt.ID] = mt
+		err := mgr.insMapTileType(mt)
+		if err != nil {
+			goutils.Error("LoadMapTileMgr:LoadCSVFile:load",
+				zap.String("fn", fn),
+				zap.Int("row", i),
+				zap.Error(err))
+
+			return err
+		}
 
 		return nil
 	})
@@ -131,4 +164,30 @@ func LoadMapTileMgr(fn string) (*MapTileMgr, error) {
 
 func (mgr *MapTileMgr) GenMap(w, h int, params *GenMapParams) (*MapData, error) {
 	return genMap(mgr, w, h, params)
+}
+
+func (mgr *MapTileMgr) insMapTileType(mt *MapTile) error {
+	_, isok := mgr.MapTile[mt.ID]
+	if isok {
+		goutils.Error("MapTileMgr:insMapTileType",
+			zap.Int("id", mt.ID),
+			zap.Error(ErrInvalidMapTileID))
+
+		return ErrInvalidMapTileID
+	}
+
+	mgr.MapTile[mt.ID] = mt
+
+	mttd, isok := mgr.MapTileType[int(mt.Type)]
+	if isok {
+		mttd.ins(mt.ID)
+	} else {
+		mttd := newMapTileTypeData()
+
+		mttd.ins(mt.ID)
+
+		mgr.MapTileType[int(mt.Type)] = mttd
+	}
+
+	return nil
 }

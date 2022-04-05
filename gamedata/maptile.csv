@@ -1,4 +1,4 @@
-﻿id,name,type,maxval,growth,chilldown,growingperiod
+id,name,type,maxval,growth,chilldown,growingperiod
 1000,均衡的粮食,TILE_FOOD,50,50,10,10
 1001,贫瘠的粮食,TILE_FOOD,10,10,10,10
 1002,丰富的粮食,TILE_FOOD,100,10,10,10

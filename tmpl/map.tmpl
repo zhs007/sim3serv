@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>map</title>
+        <style>
+            .container {
+                display: grid;
+                grid-template-columns: {{range .XArr}} 16px{{end}};
+                grid-template-rows: {{range .YArr}} 16px{{end}};
+            }
+
+            .tileempty {
+                background-color: black;
+                font-size: 12px;
+                text-align: center;
+            }
+
+            .food {
+                background-color: green;
+                font-size: 12px;
+                text-align: center;
+            }
+          </style>
+    </head>
+    <body>
+        <body>
+        <div class="container">{{range .Data}} {{range .}}
+            <div class="{{.StrType}}">{{.StrVal}}</div>{{end}} {{end}}
+        </div>
+    </body>
+</html>
