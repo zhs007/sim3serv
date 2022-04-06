@@ -11,4 +11,7 @@ var (
 	ErrInvalidMapTileID = errors.New("invalid MapTileID")
 	// ErrInvalidGenMapParams - invalid GenMapParams
 	ErrInvalidGenMapParams = errors.New("invalid GenMapParams")
+
+	// ErrInvalidFuncGetTargetDir - invalid FuncGetTargetDir
+	ErrInvalidFuncGetTargetDir = errors.New("invalid FuncGetTargetDir")
 )
