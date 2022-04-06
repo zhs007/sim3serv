@@ -1,5 +1,6 @@
 package sim3core
 
 type Person struct {
-	DNA *PersonDNA
+	X, Y int
+	DNA  *PersonDNA
 }

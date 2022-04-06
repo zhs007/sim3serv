@@ -61,4 +61,14 @@ var MgrPersonDNA *PersonDNAMgr
 
 func init() {
 	MgrPersonDNA = newPersonDNAMgr()
+
+	MgrPersonDNA.RegGetTargetDir("rand", randGetTargetDir)
+	MgrPersonDNA.RegGetTargetDir("left", leftGetTargetDir)
+	MgrPersonDNA.RegGetTargetDir("right", rightGetTargetDir)
+	MgrPersonDNA.RegGetTargetDir("up", upGetTargetDir)
+	MgrPersonDNA.RegGetTargetDir("down", downGetTargetDir)
+	MgrPersonDNA.RegGetTargetDir("leftdown", leftdownGetTargetDir)
+	MgrPersonDNA.RegGetTargetDir("leftup", leftupGetTargetDir)
+	MgrPersonDNA.RegGetTargetDir("rightdown", rightdownGetTargetDir)
+	MgrPersonDNA.RegGetTargetDir("rightup", rightupGetTargetDir)
 }
