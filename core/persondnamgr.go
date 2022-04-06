@@ -33,7 +33,7 @@ func (mgr *PersonDNAMgr) NewPersonDNAParams() *PersonDNAParams {
 		WeightsGetTargetDir: goutils.NewMapWeights(),
 	}
 
-	for k, _ := range mgr.MapGetTargetDir {
+	for k := range mgr.MapGetTargetDir {
 		params.WeightsGetTargetDir.AddWeight(k, 1, true)
 	}
 
