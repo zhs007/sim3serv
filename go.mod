@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/stretchr/testify v1.7.0
-	github.com/zhs007/goutils v0.1.47
+	github.com/zhs007/goutils v0.1.48
 	go.uber.org/zap v1.19.0
 	gopkg.in/yaml.v2 v2.2.8
 )

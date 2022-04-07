@@ -28,14 +28,18 @@ func (mgr *PersonDNAMgr) RegGetTargetDir(name string, funcGetTargetDir FuncGetTa
 	return nil
 }
 
-func (mgr *PersonDNAMgr) NewPersonDNAParams() *PersonDNAParams {
+func (mgr *PersonDNAMgr) NewPersonDNAParams(base *Base) *PersonDNAParams {
 	params := &PersonDNAParams{
 		WeightsGetTargetDir: goutils.NewMapWeights(),
 	}
 
 	for k := range mgr.MapGetTargetDir {
-		params.WeightsGetTargetDir.AddWeight(k, 1, true)
+		params.WeightsGetTargetDir.AddWeight(k, 1, false)
 	}
+
+	base.buildPersonDNAParams(params)
+
+	params.WeightsGetTargetDir.SetDefaultIsMaxWeight()
 
 	return params
 }
@@ -45,6 +49,7 @@ func (mgr *PersonDNAMgr) NewPersonDNA(params *PersonDNAParams) *PersonDNA {
 
 	nameGetTargetDir := params.WeightsGetTargetDir.Rand()
 	dna.GetTargetDir = mgr.MapGetTargetDir[nameGetTargetDir]
+	dna.NameGetTargetDir = nameGetTargetDir
 
 	return dna
 }

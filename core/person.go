@@ -1,6 +1,8 @@
 package sim3core
 
 type Person struct {
-	X, Y int
+	SceneObj
+
 	DNA  *PersonDNA
+	Base *Base
 }
