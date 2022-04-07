@@ -11,3 +11,11 @@ func (base *Base) buildPersonDNAParams(params *PersonDNAParams) {
 		params.WeightsGetTargetDir.AddWeight(v.DNA.NameGetTargetDir, 1, false)
 	}
 }
+
+func (base *Base) NewPerson() *Person {
+	person := newPerson(base.X, base.Y, base.Scene, base)
+
+	base.ListPerson = append(base.ListPerson, person)
+
+	return person
+}
